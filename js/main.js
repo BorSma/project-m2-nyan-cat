@@ -9,14 +9,83 @@ const gameEngine = new Engine(document.getElementById('app'));
 const keydownHandler = (event) => {
   // event.code contains a string. The string represents which key was press. If the
   // key is left, then we call the moveLeft method of gameEngine.player (where is this method defined?)
-  if (event.code === 'ArrowLeft') {
+  if ((event.code === 'ArrowLeft') && ( lives > 0 )) {
     gameEngine.player.moveLeft();
   }
 
   // If `event.code` is the string that represents a right arrow keypress,
   // then move our hamburger to the right
-  if (event.code === 'ArrowRight') {
+  if ((event.code === 'ArrowRight') && ( lives > 0 )) {
     gameEngine.player.moveRight();
+  }
+
+  //If the event.code is Enter then we restart the game after a life loss.
+  if ((event.code === 'Enter') && ( lives > 0 ) && ( lives !== maxLives)) {
+    announcement.update(``);
+    gameEngine.restart();
+  }
+
+  //If the event.code is Enter then we restart the game after a life loss.
+  if ((event.code === 'KeyY') && ( lives === 0 )) {
+    announcement.update(``);
+    lives = 3;
+    score = 0;
+    level = 1;
+    scoreText.update(`Score:${score}`);
+    lifeText.update(`Lives:${lives}`);
+    levelText.update(`Level:${level}`);
+    gameEngine.restart();
+  }
+
+
+  //If the event.code is Space and you have max lives you start the game
+  if ((event.code === 'Backspace') && ( lives === maxLives )) {
+    gameEngine.gameLoop();
+    lifeText.update(`Lives:${lives}`);
+    scoreText.update(`Score:${score}`);
+    levelText.update(`Level:${level}`);
+    announcement.update(``);
+    
+  }
+
+  //If the event.code is Ctrl and you have max lives you start the game
+  if (event.code === 'Space' && gameRun === 1) {
+    let shotLoc = 0;
+    const shotSpots = GAME_WIDTH / SHOT_WIDTH;
+    switch(gameEngine.player.x){
+    case 0:
+      shotLoc = 0;
+      break;
+    case 75:
+      shotLoc = 1;
+      break;
+    case 150:
+      shotLoc = 2;
+      break;
+    case 225:
+      shotLoc = 3;
+      break;
+    case 300:
+      shotLoc = 4;
+      break;
+    case 375:
+      shotLoc = 5;
+      break;
+    case 450:
+      shotLoc = 6;
+      break;  
+    case 525:
+      shotLoc = 7;
+      break;
+    case 600:
+      shotLoc = 8;
+      break;       
+    case 675:
+      shotLoc = 9;
+      break;  
+    }
+    gameEngine.shots.push(new Shot(document.getElementById('app'), shotLoc));
+    console.log("New shot!");
   }
 };
 
@@ -24,4 +93,5 @@ const keydownHandler = (event) => {
 document.addEventListener('keydown', keydownHandler);
 
 // We call the gameLoop method to start the game
-gameEngine.gameLoop();
+
+

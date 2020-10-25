@@ -1,0 +1,11 @@
+.app{
+    position: relative;
+    margin: auto;
+    width: 750px;
+} 
+
+.text:last-child{
+    position: absolute;
+    width: 375px;
+    text-align: center;
+}

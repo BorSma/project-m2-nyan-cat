@@ -16,7 +16,7 @@ const nextEnemySpot = (enemies) => {
   // We then use forEach to iterate through all the enemies.
   // If you look at the constructor of the Enemy class, you can see that every instance will have a spot property.
   // We can use this property to modify the spotsTaken array.
-  const spotsTaken = [false, false, false, false, false];
+  const spotsTaken = [false, false, false, false, false, false, false, false, false, false];
   enemies.forEach((enemy) => {
     spotsTaken[enemy.spot] = true;
   });
@@ -43,7 +43,7 @@ const addBackground = (root) => {
   const bg = document.createElement('img');
 
   // We set its src attribute and the height and width CSS attributes
-  bg.src = 'images/stars.png';
+  bg.src = 'images/background-1.png';
   bg.style.height = `${GAME_HEIGHT}px`;
   bg.style.width = `${GAME_WIDTH}px`;
 
@@ -63,4 +63,21 @@ const addBackground = (root) => {
   whiteBox.style.width = `${GAME_WIDTH}px`;
   whiteBox.style.background = '#fff';
   root.append(whiteBox);
+};
+
+
+// We create a new img.
+const explosion = (root,xLoc, yLoc) => {
+  let explode = document.createElement('img');
+  explode.src = 'images/explosion.png';
+  explode.style.position = 'absolute';
+  explode.style.left = `${xLoc}px`;
+  explode.style.top = ` ${yLoc*1.2}px`;
+  explode.style.zIndex = '10';
+  root.appendChild(explode);
+  setTimeout(function(){ 
+    root.removeChild(explode); 
+    clearTimeout();
+  }, 500);
+  
 };
