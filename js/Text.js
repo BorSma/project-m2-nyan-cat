@@ -31,8 +31,8 @@ class Text {
 //Initialize banner at the top and set to number of lives available.
 let lifeText = new Text(document.getElementById('app'), GAME_WIDTH*0.05,20);
 let scoreText = new Text(document.getElementById('app'), GAME_WIDTH*0.7,20);
-let levelText = new Text(document.getElementById('app'), GAME_WIDTH*0.4,20);
-let announcement = new Text(document.getElementById('app'), 0, GAME_HEIGHT/2.25, GAME_WIDTH);
-announcement.update(`Press Backspace to Start!`);
+let levelText = new Text(document.getElementById('app'), GAME_WIDTH*0.44,20);
+let announcement = new Text(document.getElementById('app'), 0, GAME_HEIGHT/3.25, GAME_WIDTH);
+announcement.update(`Press Enter to Start!\n\nControls:\n ↑ - Up \n↓ - Down\n← - Left\n→ - Right\n Spacebar - Cheese Slice Launcher`);
 
 

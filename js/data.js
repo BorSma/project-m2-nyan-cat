@@ -29,10 +29,12 @@ const asteroid_HEIGHT = 110;
 
 const bonus_WIDTH = 75;
 const bonus_HEIGHT = 32;
+let bonusPoints = 100;
 
+let enemiesDestroyed = 0;
 
 let maxLives=3;
-let lives = 3;
+let lives = 0;
 
 let score = 0;
 let enemyPassPoints = 10;

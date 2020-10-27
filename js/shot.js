@@ -27,7 +27,9 @@ class Shot {
     // of the instance since it is needed throughout its lifetime. The destroyed property will indicate whether this enemy
     // is still in play. It is set to true whenever the enemy goes past the bottom of the screen.
     // It is used in the Engine to determine whether or not an enemy is in a particular column.
-    this.y = GAME_HEIGHT-SHOT_HEIGHT;
+    this.y = gameEngine.player.y-SHOT_HEIGHT;
+    //this.y = GAME_HEIGHT-SHOT_HEIGHT;
+    console.log(this.y);
     this.destroyed = false;
     this.scored = false;
     this.collision = false;
@@ -68,7 +70,7 @@ class Shot {
     // If the y position of the DOM element is greater than the GAME_HEIGHT then the enemy is at the bottom
     // of the screen and should be removed. We remove the DOM element from the root DOM element and we set
     // the destroyed property to indicate that the enemy should no longer be in play
-    if ((this.y < 0) || ((this.collision === true))) {
+    if ((this.y < 0) || ((this.collision === true)) || (this.clear === true))  {
       //this.root.removeChild(this.domElement);
       //document.getElementById('app').removeChild(this.domElement);
       app.removeChild(document.querySelector(".cheese"));

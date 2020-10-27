@@ -19,34 +19,32 @@ const keydownHandler = (event) => {
     gameEngine.player.moveRight();
   }
 
+  if ((event.code === 'ArrowUp') && ( lives > 0 )) {
+    console.log("Up");
+    gameEngine.player.moveUp();
+  }
+
+  if ((event.code === 'ArrowDown') && ( lives > 0 )) {
+    console.log("Down");
+    gameEngine.player.moveDown();
+  }
+
   //If the event.code is Enter then we restart the game after a life loss.
   if ((event.code === 'Enter') && ( lives > 0 ) && ( lives !== maxLives)) {
-    announcement.update(``);
-    gameEngine.restart();
+    gameEngine.clearElements();
+    gameEngine.levelStart();
   }
 
-  //If the event.code is Enter then we restart the game after a life loss.
-  if ((event.code === 'KeyY') && ( lives === 0 )) {
-    announcement.update(``);
-    lives = 3;
-    score = 0;
-    level = 1;
-    scoreText.update(`Score:${score}`);
-    lifeText.update(`Lives:${lives}`);
-    levelText.update(`Level:${level}`);
-    gameEngine.restart();
+  //If the event.code is Enter then we restart the game.
+  if ((event.code === 'Enter') && ( lives === 0 )) {
+    gameEngine.clearElements();
+    gameEngine.restartGame();
   }
 
-
-  //If the event.code is Space and you have max lives you start the game
-  if ((event.code === 'Backspace') && ( lives === maxLives )) {
-    gameEngine.gameLoop();
-    lifeText.update(`Lives:${lives}`);
-    scoreText.update(`Score:${score}`);
-    levelText.update(`Level:${level}`);
-    announcement.update(``);
-    
-  }
+  // //If the event.code is Space and you have max lives you start the game
+  // if ((event.code === 'Enter') && ( lives === maxLives )) {
+  //   gameEngine.levelOne();
+  // }
 
   //If the event.code is Ctrl and you have max lives you start the game
   if (event.code === 'Space' && gameRun === 1) {
@@ -85,7 +83,6 @@ const keydownHandler = (event) => {
       break;  
     }
     gameEngine.shots.push(new Shot(document.getElementById('app'), shotLoc));
-    console.log("New shot!");
   }
 };
 

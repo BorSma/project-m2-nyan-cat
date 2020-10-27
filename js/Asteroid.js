@@ -57,7 +57,8 @@ class Asteroid {
 
     // Show that the user can actually see the img DOM node, we append it to the root DOM node.
     theRoot.appendChild(this.domElement);
-    this.speed = Math.random() / 2 + 0.25 + level/100;
+    //this.speed = Math.random() / 2 + 0.25 + level/100;
+    this.speed = Math.random() / 1.25;
   }
 
   // We set the speed property of the asteroid. This determines how fast it moves down the screen.

@@ -81,3 +81,18 @@ const explosion = (root,xLoc, yLoc) => {
   }, 500);
   
 };
+
+const explosionAsteroid = (root,xLoc, yLoc) => {
+  let smoke = document.createElement('img');
+  smoke.src = 'images/smoke.png';
+  smoke.style.position = 'absolute';
+  smoke.style.left = `${xLoc}px`;
+  smoke.style.top = ` ${yLoc*1.25}px`;
+  smoke.style.zIndex = '10';
+  root.appendChild(smoke);
+  setTimeout(function(){ 
+    root.removeChild(smoke); 
+    clearTimeout();
+  }, 500);
+  
+};
