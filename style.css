@@ -9,3 +9,18 @@
     width: 375px;
     text-align: center;
 }
+
+.input {
+    display: absolute;
+    width: 750;
+    height: 50px;
+    color: white;
+    border-style: none;
+    background: none;
+    text-align: center;
+    outline: none;
+}
+
+.input:active {
+    border-style: none;
+}

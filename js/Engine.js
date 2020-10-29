@@ -26,6 +26,7 @@ class Engine {
     // that contains instances of the bonus class
     this.bonuses = [];
     // We add the background image to the game
+    this.ranking = new Ranking(this.root);
     addBackground(this.root);
   }
 
@@ -34,10 +35,10 @@ class Engine {
   //  - Detects a collision between the player and any enemy
   //  - Removes enemies that are too low from the enemies array
   gameLoop = () => {
-    gameRun = 1;
-    gameSpeed++;
+    
     announcement.update(``);
-
+    gameWait = 0;
+    gameRun = 1;
 
   
     // This code is to see how much time, in milliseconds, has elapsed since the last
@@ -67,8 +68,8 @@ class Engine {
     // We use filter to accomplish this.
     // Remember: this.enemies only contains instances of the asteroid class.
 
-    // ASTEROID STUFF
-    if (level > 2){
+ //ASTEROID STUFF
+  //if (level >= 3){
     this.asteroids = this.asteroids.filter((asteroid) => {
       return !asteroid.destroyed;
     });
@@ -81,23 +82,30 @@ class Engine {
       const spot = nextEnemySpot(this.asteroids);
       this.asteroids.push(new Asteroid(this.root, spot));
     }
-  }
+  //}
 
   // BONUS STUFF
-    if (level > 1){
+    //if (level >= 5){
     this.bonuses = this.bonuses.filter((bonus) => {
       return !bonus.destroyed;
     });
     this.bonuses.forEach((bonus) => {
       bonus.update(timeDiff);
     });
+    //
     while (this.bonuses.length < MAX_BONUSES) {
       // We find the next available spot and, using this spot, we create an enemy.
       // We add this enemy to the enemies array
-      const spot = nextEnemySpot(this.bonuses);
-      this.bonuses.push(new Bonus(this.root, spot));
-    }
-  }
+      //setTimeout(function() { 
+      
+        const spot = nextEnemySpot(this.bonuses);
+        this.bonuses.push(new Bonus(this.root, spot));
+        console.log("Vaccine!");
+      
+      //  }, 3000);
+    //}
+  
+ }
 
     // We remove all the destroyed enemies from the array referred to by \`this.enemies\`.
     // We use filter to accomplish this.
@@ -134,7 +142,6 @@ class Engine {
       level++;
       this.clearElements();
       this.levelStart();
-      console.log(`Level ${level}!`);
       return;
     }
 
@@ -142,12 +149,30 @@ class Engine {
      if ( lives > 0 ) {
        lives=lives-1; 
        gameRun = 0;
-       announcement.update(`Press 'Enter' to Restart!`);
+       announcement.update(`Too Slow! \n\n Press 'Enter' to Continue!`);
+      }
+      
+     if (lives === 0) {
+      gameRun = 0;
+      if (score > gameEngine.ranking.highscore3.score) {
+     announcement.update(`GAME OVER!\n Type your name in and press 'Enter' to play again! \n\n Best Scores:
+        \n 1. ${gameEngine.ranking.highscore1.name}: ${gameEngine.ranking.highscore1.score} pts
+        \n 2. ${gameEngine.ranking.highscore2.name}: ${gameEngine.ranking.highscore2.score} pts
+        \n 3. ${gameEngine.ranking.highscore3.name}: ${gameEngine.ranking.highscore3.score} pts
+        \n Enter your name:`);
+        gameEngine.ranking.enterHighScore();
+      }
+      else 
+      {
+        announcement.update(`GAME OVER!\n Press 'Enter' to play again! \n\n Best Scores:
+           \n 1. ${gameEngine.ranking.highscore1.name}: ${gameEngine.ranking.highscore1.score} pts
+           \n 2. ${gameEngine.ranking.highscore2.name}: ${gameEngine.ranking.highscore2.score} pts
+           \n 3. ${gameEngine.ranking.highscore3.name}: ${gameEngine.ranking.highscore3.score} pts`);
+         }
       }
       lifeText.update(`Lives:${lives}`);
-     //clearTimeout;
-     if (lives === 0) announcement.update(`GAME OVER!\n Press 'Enter' to play again`);
      return;
+     
     }
 
     if (this.enemyPass()) {
@@ -157,22 +182,20 @@ class Engine {
     }
 
     if (this.bonusScore()) {
-      console.log("Bonus!");
       //Get Points by getting bonuses!
       score = score + bonusPoints;
-      scoreText.update(`Score:${score}`);
-      //this.collision = true;
-      
+      lives++;
+      lifeText.update(`Lives: ${lives}`);
+      scoreText.update(`Score: ${score}`);
     }
 
     if (this.collisionCat()) {
       
       score = score + enemyPassPoints
-      scoreText.update(`Score:${score}`);
+      scoreText.update(`Score: ${score}`);
     }
 
     if (this.collisionAsteroid()) {
-      
       //score = score + enemyPassPoints
       //scoreText.update(`Score:${score}`);
     }
@@ -185,18 +208,21 @@ class Engine {
   isPlayerDead = () => {
     let dead = 0;
     this.enemies.forEach(enemy => {
-        if ((enemy.x === this.player.x) && (Math.round(enemy.y) > (this.player.y-ENEMY_HEIGHT)) && (Math.round(enemy.y) < (this.player.y)) ) {
+        if ((enemy.x === this.player.x) && (Math.round(enemy.y) > (this.player.y-ENEMY_HEIGHT+10)) && (Math.round(enemy.y) < (this.player.y+ PLAYER_HEIGHT)) ) {
         dead = 1;
         return true;
       }   
     })
     this.asteroids.forEach(asteroid => {
-      if ((asteroid.x === this.player.x) && (Math.round(asteroid.y) > (this.player.y-asteroid_HEIGHT)) && (Math.round(asteroid.y) < (this.player.y+asteroid_HEIGHT*0.5))) {
+      if ((asteroid.x === this.player.x) && ((Math.round(asteroid.y)) > (this.player.y - asteroid_HEIGHT+40)) && ((Math.round(asteroid.y)) < (this.player.y + PLAYER_HEIGHT))) {
         dead = 1;
         return true;
       }   
     })
-    if (dead) return true;
+    if (dead) {
+      
+      return true;
+    }
     else return false;
   };
   
@@ -214,7 +240,7 @@ class Engine {
   bonusScore = () =>{
     let bonusCheck = 0;
     this.bonuses.forEach(bonus => {
-    if ((bonus.x === this.player.x) && (Math.round(bonus.y) > (this.player.y-bonus_HEIGHT)) && (Math.round(bonus.y) < (this.player.y+bonus_HEIGHT) && bonus.scored === false)) {
+    if ((bonus.x === this.player.x) && (Math.round(bonus.y) > (this.player.y-bonus_HEIGHT+10)) && (Math.round(bonus.y) < (this.player.y+bonus_HEIGHT) && bonus.scored === false)) {
       bonusCheck = 1;
       bonus.collision = true;
       bonus.scored = true;
@@ -227,13 +253,12 @@ class Engine {
     let colCheck = 0;
     this.enemies.forEach(enemy => {
       this.shots.forEach(shot=> {
-        if ((enemy.x === shot.x) && (shot.y < (enemy.y+ENEMY_HEIGHT/1.5)) && (enemy.collision === false)) {
+        if ((enemy.x === shot.x) && (shot.y < (enemy.y+ENEMY_HEIGHT/1.5)) && (gameEngine.player.y > enemy.y) && (enemy.collision === false)) {
           enemy.collision = true;
           shot.collision = true;
           explosion(this.root, enemy.x, enemy.y);
           colCheck = 1;
           enemiesDestroyed++;
-          console.log(enemiesDestroyed);
         }
       });
       });  
@@ -245,8 +270,7 @@ class Engine {
       let colAstCheck = 0;
       this.asteroids.forEach(asteroid => {
         this.shots.forEach(shot=> {
-          if ((asteroid.x === shot.x) && (shot.y < (asteroid.y+asteroid_HEIGHT/1.5)) && (asteroid.collision === false)) {
-            //asteroid.collision = true;
+          if ((asteroid.x === shot.x) && (shot.y < (asteroid.y+asteroid_HEIGHT)) && (gameEngine.player.y > asteroid.y) && (asteroid.collision === false)) {
             shot.collision = true;
             explosionAsteroid(this.root, asteroid.x, asteroid.y);
             colAstCheck = 1;
@@ -298,27 +322,42 @@ class Engine {
      this.asteroids = this.asteroids.filter((asteroid) => {
        return !asteroid.destroyed;
      });
-    // gameEngine.player.x = 4 * PLAYER_WIDTH;
-    // gameEngine.player.y = GAME_HEIGHT - PLAYER_HEIGHT - 10;
-    // gameEngine.player.style.left = `${gameEngine.player.x}px`;
-    // gameEngine.player.style.top = ` ${gameEngine.player.y}px`;
+
     
   }
 
   levelOne = () => {
+    gameEngine.player.centerPlayer();
+    gameRun = 0;
+    gameWait = 1;
     level = 1;
-    lifeText.update(`Lives:${lives}`);
-    scoreText.update(`Score:${score}`);
-    levelText.update(`Level:${level}`);
-    announcement.update(`Level ${level}\n\n Get Ready!`);
+    lifeText.update(`Lives: ${lives}`);
+    scoreText.update(`Score: ${score}`);
+    levelText.update(`Level: ${level}`);
+    announcement.update(`Level ${level}\n\n Get Ready! \n\n Eradicate the viruses!`);
     setTimeout(gameEngine.gameLoop, 3000);
   }
 
   levelStart = () => {
-    lifeText.update(`Lives:${lives}`);
-    scoreText.update(`Score:${score}`);
-    levelText.update(`Level:${level}`);
-    announcement.update(`Level ${level}\n\n Get Ready!`);
+    gameEngine.player.centerPlayer();
+    gameRun = 0;
+    gameWait = 1;
+    lifeText.update(`Lives: ${lives}`);
+    scoreText.update(`Score: ${score}`);
+    levelText.update(`Level: ${level}`);
+     switch(level){
+       case 1:
+         announcement.update(`Level ${level}\n\n Get Ready!`);
+         break;
+       case 3:
+         announcement.update(`Level ${level}\n\n Get Ready!\n\n Dodge the Super Viruses!`);
+         break;
+       case 5:
+         announcement.update(`Level ${level}\n\n Get Ready!\n\n Collect the Vaccines for Bonus Points!`);
+         break;
+       default:
+         announcement.update(`Level ${level}\n\n Get Ready!`);
+     }
     setTimeout(gameEngine.gameLoop, 3000);
   }
 
@@ -328,16 +367,17 @@ class Engine {
   score = 0;
   level = 1;
   enemiesDestroyed = 0;
-  scoreText.update(`Score:${score}`);
-  lifeText.update(`Lives:${lives}`);
-  levelText.update(`Level:${level}`);
+  scoreText.update(`Score: ${score}`);
+  lifeText.update(`Lives: ${lives}`);
+  levelText.update(`Level: ${level}`);
   gameEngine.levelOne();
   
 }
 
   levelUp = () => {
+    gameWait = 1;
     let tarCheck=0;
-    if (enemiesDestroyed === level*10) {
+    if (enemiesDestroyed === level*11) {
       tarCheck=1;
   }
   if (tarCheck === 1) return true;

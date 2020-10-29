@@ -48,7 +48,8 @@ class Enemy {
     this.domElement = document.createElement('img');
 
     // We give it a src attribute to specify which image to display.
-    this.domElement.src = './images/enemy.png';
+    //this.domElement.src = './images/enemy.png';
+    this.domElement.src = './images/virus.png';
     // We modify the CSS style of the DOM node.
     this.domElement.style.position = 'absolute';
     this.domElement.style.left = `${this.x}px`;
@@ -57,7 +58,9 @@ class Enemy {
 
     // Show that the user can actually see the img DOM node, we append it to the root DOM node.
     theRoot.appendChild(this.domElement);
-    this.speed = Math.random() / 2 + 0.25 + level/100;
+    //this.speed = Math.random() / 0.25 + level/10;
+    this.speed = Math.random() / 1.25 + 0.25;
+    //this.speed = Math.random() / level + 0.25;
   }
 
   // We set the speed property of the enemy. This determines how fast it moves down the screen.
@@ -69,7 +72,8 @@ class Enemy {
     // We update the y property of the instance in proportion of the amount of time
     // since the last call to update. We also update the top css property so that the image
     // is updated on screen
-    this.y = this.y + timeDiff * this.speed;
+    if (level<10) this.y = this.y + timeDiff * this.speed * (level/10);
+    else this.y = this.y + timeDiff * this.speed 
     this.domElement.style.top = `${this.y}px`;
 
     // If the y position of the DOM element is greater than the GAME_HEIGHT then the enemy is at the bottom

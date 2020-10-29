@@ -9,34 +9,34 @@ const gameEngine = new Engine(document.getElementById('app'));
 const keydownHandler = (event) => {
   // event.code contains a string. The string represents which key was press. If the
   // key is left, then we call the moveLeft method of gameEngine.player (where is this method defined?)
-  if ((event.code === 'ArrowLeft') && ( lives > 0 )) {
+  if ((event.code === 'ArrowLeft') && ( lives > 0 ) && (( gameRun === 1 ) || ( gameWait === 1 ))) {
     gameEngine.player.moveLeft();
   }
 
   // If `event.code` is the string that represents a right arrow keypress,
   // then move our hamburger to the right
-  if ((event.code === 'ArrowRight') && ( lives > 0 )) {
+  if ((event.code === 'ArrowRight') && ( lives > 0 ) && (( gameRun === 1 ) || ( gameWait === 1 ))) {
     gameEngine.player.moveRight();
   }
 
-  if ((event.code === 'ArrowUp') && ( lives > 0 )) {
-    console.log("Up");
+  if ((event.code === 'ArrowUp') && ( lives > 0 ) && (( gameRun === 1 ) || ( gameWait === 1 ))) {
     gameEngine.player.moveUp();
   }
 
-  if ((event.code === 'ArrowDown') && ( lives > 0 )) {
-    console.log("Down");
+  if ((event.code === 'ArrowDown') && ( lives > 0 ) && (( gameRun === 1 ) || ( gameWait === 1 ))) {
     gameEngine.player.moveDown();
   }
 
   //If the event.code is Enter then we restart the game after a life loss.
   if ((event.code === 'Enter') && ( lives > 0 ) && ( lives !== maxLives)) {
+    
     gameEngine.clearElements();
     gameEngine.levelStart();
   }
 
   //If the event.code is Enter then we restart the game.
   if ((event.code === 'Enter') && ( lives === 0 )) {
+    gameEngine.ranking.removeHighScore();
     gameEngine.clearElements();
     gameEngine.restartGame();
   }

@@ -29,7 +29,6 @@ class Shot {
     // It is used in the Engine to determine whether or not an enemy is in a particular column.
     this.y = gameEngine.player.y-SHOT_HEIGHT;
     //this.y = GAME_HEIGHT-SHOT_HEIGHT;
-    console.log(this.y);
     this.destroyed = false;
     this.scored = false;
     this.collision = false;
@@ -42,7 +41,8 @@ class Shot {
     this.domElement = document.createElement('img');
 
     // We give it a src attribute to specify which image to display.
-    this.domElement.src = './images/cheese.png';
+    //this.domElement.src = './images/cheese.png';
+    this.domElement.src = './images/mask.png';
     // We modify the CSS style of the DOM node.
     this.domElement.style.position = 'absolute';
     this.domElement.style.left = `${this.x}px`;

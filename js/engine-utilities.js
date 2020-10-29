@@ -69,10 +69,10 @@ const addBackground = (root) => {
 // We create a new img.
 const explosion = (root,xLoc, yLoc) => {
   let explode = document.createElement('img');
-  explode.src = 'images/explosion.png';
+  explode.src = 'images/viruswmask.png';
   explode.style.position = 'absolute';
   explode.style.left = `${xLoc}px`;
-  explode.style.top = ` ${yLoc*1.2}px`;
+  explode.style.top = ` ${yLoc+ENEMY_HEIGHT/2}px`;
   explode.style.zIndex = '10';
   root.appendChild(explode);
   setTimeout(function(){ 
@@ -87,7 +87,7 @@ const explosionAsteroid = (root,xLoc, yLoc) => {
   smoke.src = 'images/smoke.png';
   smoke.style.position = 'absolute';
   smoke.style.left = `${xLoc}px`;
-  smoke.style.top = ` ${yLoc*1.25}px`;
+  smoke.style.top = ` ${yLoc+asteroid_HEIGHT/2}px`;
   smoke.style.zIndex = '10';
   root.appendChild(smoke);
   setTimeout(function(){ 

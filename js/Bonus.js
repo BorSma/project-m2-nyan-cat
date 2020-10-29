@@ -48,7 +48,7 @@ class Bonus {
     this.domElement = document.createElement('img');
 
     // We give it a src attribute to specify which image to display.
-    this.domElement.src = './images/100.png';
+    this.domElement.src = './images/syringe.png';
     // We modify the CSS style of the DOM node.
     this.domElement.style.position = 'absolute';
     this.domElement.style.left = `${this.x}px`;
@@ -69,7 +69,8 @@ class Bonus {
     // We update the y property of the instance in proportion of the amount of time
     // since the last call to update. We also update the top css property so that the image
     // is updated on screen
-    this.y = this.y + timeDiff * this.speed;
+    if (level<10) this.y = this.y + timeDiff * this.speed * (level/10);
+    else this.y = this.y + timeDiff * this.speed 
     this.domElement.style.top = `${this.y}px`;
 
     // If the y position of the DOM element is greater than the GAME_HEIGHT then the bonus is at the bottom

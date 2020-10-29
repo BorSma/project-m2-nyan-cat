@@ -15,7 +15,8 @@ class Player {
     // We create a DOM node. We will be updating the DOM node every time we move the player, so we store a reference to the
     // DOM node in a property.
     this.domElement = document.createElement('img');
-    this.domElement.src = 'images/player.png';
+    //this.domElement.src = 'images/player.png';
+    this.domElement.src = 'images/doctor.png';
     this.domElement.style.position = 'absolute';
     this.domElement.style.left = `${this.x}px`;
     this.domElement.style.top = ` ${this.y}px`;
@@ -51,5 +52,12 @@ class Player {
       this.y = this.y + PLAYER_HEIGHT;
     }
     this.domElement.style.top = `${this.y}px`;
+  }
+
+  centerPlayer(){
+    this.x = 4 * PLAYER_WIDTH;
+    this.y = GAME_HEIGHT - PLAYER_HEIGHT - 10;
+    this.domElement.style.left = `${this.x}px`;
+    this.domElement.style.top = ` ${this.y}px`;
   }
 }

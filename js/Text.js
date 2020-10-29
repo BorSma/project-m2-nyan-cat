@@ -13,7 +13,7 @@ class Text {
     div.style.width = width;
     div.style.textAlign = 'center';
     div.style.color = 'white';
-    div.style.font = 'bold 30px Impact';
+    div.style.font = '30px Impact';
     div.style.zIndex = 2000;
     div.setAttribute("class","text");
 
@@ -29,10 +29,15 @@ class Text {
 }
 
 //Initialize banner at the top and set to number of lives available.
-let lifeText = new Text(document.getElementById('app'), GAME_WIDTH*0.05,20);
-let scoreText = new Text(document.getElementById('app'), GAME_WIDTH*0.7,20);
+let lifeText = new Text(document.getElementById('app'), GAME_WIDTH*0.01,20);
+let scoreText = new Text(document.getElementById('app'), GAME_WIDTH*0.79,20);
 let levelText = new Text(document.getElementById('app'), GAME_WIDTH*0.44,20);
-let announcement = new Text(document.getElementById('app'), 0, GAME_HEIGHT/3.25, GAME_WIDTH);
-announcement.update(`Press Enter to Start!\n\nControls:\n ↑ - Up \n↓ - Down\n← - Left\n→ - Right\n Spacebar - Cheese Slice Launcher`);
+let announcement = new Text(document.getElementById('app'), 0, GAME_HEIGHT/7, GAME_WIDTH);
+announcement.update(`Press Enter to Start!\n\nControls:\n ↑ - Up \n↓ - Down\n← - Left\n→ - Right\n Spacebar - Cheese Slice Launcher \n\n Best Scores:
+\n 1. ${gameEngine.ranking.highscore1.name}: ${gameEngine.ranking.highscore1.score} pts
+\n 2. ${gameEngine.ranking.highscore2.name}: ${gameEngine.ranking.highscore2.score} pts
+\n 3. ${gameEngine.ranking.highscore3.name}: ${gameEngine.ranking.highscore3.score} pts
+
+`);
 
 
