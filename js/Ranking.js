@@ -55,4 +55,6 @@ class Ranking {
     highScoreCheck = false;
     }
   }
+
+  
 }

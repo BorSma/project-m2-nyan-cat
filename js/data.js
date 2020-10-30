@@ -14,8 +14,8 @@ const GAME_HEIGHT = 800;
 const ENEMY_WIDTH = 75;
 //const ENEMY_HEIGHT = 156;
 const ENEMY_HEIGHT = 74;
-const MAX_ENEMIES = 2;
-const MAX_ASTEROIDS = 2;
+let MAX_ENEMIES = 2;
+let MAX_ASTEROIDS = 2;
 const MAX_BONUSES = 1;
 
 // These constants represent the player width and height.
@@ -48,3 +48,7 @@ let gameWait = 0;
 let level = 1;
 
 let highScoreCheck = false;
+
+//time between bonuses
+let max = 20000;
+let min = 15000;

@@ -63,6 +63,8 @@ const addBackground = (root) => {
   whiteBox.style.width = `${GAME_WIDTH}px`;
   whiteBox.style.background = '#fff';
   root.append(whiteBox);
+
+
 };
 
 
@@ -96,3 +98,17 @@ const explosionAsteroid = (root,xLoc, yLoc) => {
   }, 500);
   
 };
+
+const addTopBar = (root) => {
+  const blackBox = document.createElement('div');
+
+  // We put a high z-index so that the div is placed over all other DOM nodes
+  blackBox.style.zIndex = 50;
+  blackBox.style.position = 'absolute';
+  blackBox.style.top = `0px`;
+  blackBox.style.height = `55px`;
+  blackBox.style.width = `${GAME_WIDTH}px`;
+  blackBox.style.background = '#323232';
+  blackBox.style.opacity = '0.8';
+  root.append(blackBox);
+}
