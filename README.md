@@ -22,4 +22,7 @@ The goal of the game is to stay alive as long as possible by avoiding the Viruse
 9. Added the ability to put in a high score at the end of the game if your score is high enough!
 10. Made the game screen wider. Centered the game screen. Changed animations of the player/enemies.
 
+## Play
+
+https://elastic-edison-fd9167.netlify.app/
 
