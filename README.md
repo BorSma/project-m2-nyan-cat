@@ -2,7 +2,6 @@
 
 <p align="center"><img src="./images/screenshot1.png"></p>
 <p align="center"><img src="./images/screenshot2.png"></p>
-<p align="center"><img src="./images/screenshot3.png"></p>
 
 ## The game
 
